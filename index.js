@@ -60,6 +60,7 @@ const init = async () => {
 const users_save_queue_handler = () => {
   let index = Queue.shift();
   if (index != undefined) {
+    // console.log('updating', map[index].nick);
     if (map[index]?._history?.length) {
       map[index].history = JSON.stringify(map[index]._history);
     }
@@ -117,7 +118,7 @@ const map_process = async () => {
       log_counter = 15;
     }
 
-    if (got_clusters_count === 9) {
+    if (got_clusters_count) { //  === 9
       map.forEach(mapRowUpdate);
       setInfo(info, true, events);
     } else {
@@ -146,7 +147,6 @@ async function getMapInfo (url) {
 
   const current = await page.url();
   let counter = 0;
-
   if (current.includes("https://auth.sberclass.ru/auth/realms/")) {
     await page.type("input[name='username']", LOGIN); // {delay: 70}
     await page.type("input[name='password']", PASS); // {delay: 60}
